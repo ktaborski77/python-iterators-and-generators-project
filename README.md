@@ -1,1 +1,0 @@
-# python-iterators-and-generators-project
