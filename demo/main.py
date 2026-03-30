@@ -36,6 +36,85 @@ def prosty_generator():
     print("--- Startuję! ---")
     yield "A"
 
+#slajd 5:
+# Prosta iteracja po liście
+owoce = ["jabłko", "banan", "wiśnia"]
+
+for owoc in owoce:
+    print(f"Przetwarzam: {owoc}")
+
+#slajd 6:
+# Sprawdzamy, czy obiekty posiadają metodę __iter__
+owoce = ["jabłko", "banan"]
+liczba = 42
+
+# 1. Lista (Zbiór danych) – posiada kontrakt
+print(hasattr(owoce, "__iter__"))   # Wynik: True (Książka z danymi)
+
+# 2. Liczba (Skalar) – nie posiada kontraktu
+print(hasattr(liczba, "__iter__"))  # Wynik: False (Brak kontraktu)
+
+# slajd 9
+lista = ["A", "B"]
+
+# To, co piszemy:
+for x in lista:
+    print(x)
+
+# To, co faktycznie robi Python:
+_iterator = iter(lista)  # 1. Wywołanie iter()
+
+while True:
+    try:
+        x = next(_iterator)  # 2. Wywołanie __next__()
+        print(x)
+    except StopIteration:    # 3. Obsługa końca (wyjątek)
+        break
+
+#slajd 11
+# 1. Mamy zwykły obiekt iterowalny (Iterable)
+dane = [10, 20]
+
+# 2. Tworzymy "wskaźnik" (Iterator)
+it = iter(dane)
+
+# 3. Ręcznie pobieramy elementy
+print(next(it))  # Wynik: 10
+print(next(it))  # Wynik: 20
+
+# 4. Co się stanie, gdy dane się skończą?
+#print(next(it))  # WYJĄTEK: StopIteration
+
+#slajd 12:
+class Odliczanie:
+    def __init__(self, start):
+        self.obecny = start
+
+    def __iter__(self):
+        # Iterator musi być "iterable", więc zwraca samego siebie
+        return self
+
+    def __next__(self):
+        if self.obecny <= 0:
+            raise StopIteration  # Sygnał końca danych
+        
+        wynik = self.obecny
+        self.obecny -= 1
+        return wynik
+
+# Użycie:
+licznik = Odliczanie(3)
+for liczba in licznik:
+    print(liczba)  # Wynik: 3, 2, 1
+#to samo co wyżej ale za pomoca genertaora
+def generator_odliczania(n):
+    while n > 0:
+        yield n  
+        n -= 1
+
+# Użycie (identyczne):
+for i in generator_odliczania(3):
+    print(i)
 # WYJAŚNIENIE DLA SLAJDU 13:
 print("Krok 1: Wywołuję funkcję")
 moj_gen = prosty_generator()  # Tu się NIC nie wypisze w konsoli!
@@ -91,3 +170,83 @@ try:
     next(gen)
 except StopIteration:
     print("KONIEC: Generator wyczerpany, cykl życia zakończony.")
+
+# slajd 19
+# List comprehension (tworzy całą listę od razu)
+lista = [x * 2 for x in range(5)]
+
+# Generator expression (tworzy obiekt "w gotowości")
+gen = (x * 2 for x in range(5))
+
+print(lista)  # Wynik: [0, 2, 4, 6, 8]
+print(gen)    # Wynik: <generator object <genexpr> at ...>
+
+# Generatora używamy np. w pętli lub funkcją next()
+print(next(gen)) # Wynik: 0
+
+#slajd 23 
+def generator_id():
+    numer = 1
+    while True:
+        yield f"ID-{numer:04d}"
+        numer += 1
+
+# Tworzymy obiekt (nic jeszcze nie zajmuje RAMu)
+baza_id = generator_id()
+
+# Możemy pobierać ID w nieskończoność
+print(next(baza_id))  # Wynik: ID-0001
+print(next(baza_id))  # Wynik: ID-0002
+
+#slajd 24 fibonacci:
+def fibonacci():
+    a, b = 0, 1
+    while True:
+        yield a
+        # obliczamy nową parę jednocześnie
+        a, b = b, a + b
+
+# Użycie:
+fib = fibonacci()
+
+for _ in range(10):
+    print(next(fib), end=" ")
+# Wynik: 0 1 1 2 3 5 8 13 21 34
+
+#SLAJD 25:
+import itertools
+
+# 1. count() - Automatyczne ID dla procesów
+id_generator = itertools.count(start=100, step=10)
+print(next(id_generator))  # Wynik: 100
+print(next(id_generator))  # Wynik: 110
+
+# 2. cycle() - Przełączanie tur w grze
+gracze = ["Gracz 1", "Gracz 2"]
+tury = itertools.cycle(gracze)
+
+print(next(tury))  # Wynik: Gracz 1
+print(next(tury))  # Wynik: Gracz 2
+print(next(tury))  # Wynik: Gracz 1 (zapętlone!)
+
+
+lista_a = [1, 2, 3]
+lista_b = [4, 5, 6]
+
+# Tradycyjne łączenie (tworzy nową listę w RAM)
+nowa_lista = lista_a + lista_b 
+# Łączymy wirtualnie
+for element in itertools.chain(lista_a, lista_b):
+    print(element) # Wypisze: 1, 2, 3, 4, 5, 6
+
+def zuzyty_gen():
+    yield 1
+    yield 2
+
+gen = zuzyty_gen()
+
+# Pierwsze użycie - wyciągamy wszystkie dane
+print(list(gen))  # Wynik: [1, 2]
+
+# Druga próba - generator jest już "pusty"
+print(list(gen))  # Wynik: []
