@@ -1,0 +1,30 @@
+1. Jaka jest główna różnica w zużyciu pamięci RAM między tradycyjną listą a generatorem przy przetwarzaniu bardzo dużych zbiorów danych?
+A) Lista zużywa stałą ilość pamięci, a generator tyle, ile jest elementów.
+B) Lista zużywa pamięć proporcjonalnie do liczby elementów, a generator stałą, minimalną ilość.
+C) Obie struktury zużywają tyle samo pamięci, różnią się tylko czasem dostępu.
+D) Generator zużywa więcej pamięci, ponieważ musi przechowywać kod funkcji.
+Poprawna odpowiedź: B
+2. Czym charakteryzuje się Eager Evaluation?
+A) Oblicza wartości tylko na żądanie
+B) Przechowuje wszystkie wyniki w pamięci
+C) Może prowadzić do MemoryError
+D) Ma złożoność pamięciową O(1)
+Poprawna odpowiedź: B, C
+3. Które stwierdzenia o iterable są prawdziwe?
+A) Posiada metodę  _iter_()
+B) Można go używać w pętli for
+C) Musi mieć metodę  _next_()
+D) Jest zawsze iteratorem
+Poprawna odpowiedź: A, B
+4. Co robi yield?
+A) Kończy funkcję na stałe
+B) Zwraca wartość i zatrzymuje funkcję
+C) Zapamiętuje stan funkcji
+D) Restartuje funkcję od początku
+Poprawna odpowiedź: B, C
+Pytanie 5: Dlaczego generatory są idealnym rozwiązaniem do tworzenia nieskończonych sekwencji (np. ciągu wszystkich liczb naturalnych)?
+A) Ponieważ automatycznie obliczają sumę wszystkich elementów w tle.
+B) Ponieważ nie wymagają przechowywania całej sekwencji, a jedynie stanu potrzebnego do wygenerowania kolejnej liczby.
+C) Ponieważ są napisane w języku C, co pozwala na ominięcie limitów pamięci RAM.
+D) Ponieważ pętla while True działa w nich szybciej niż w zwykłych funkcjach.
+Poprawna odpowiedź: B
