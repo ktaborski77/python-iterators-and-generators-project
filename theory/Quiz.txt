@@ -25,6 +25,6 @@ Poprawna odpowiedź: B, C
 Pytanie 5: Dlaczego generatory są idealnym rozwiązaniem do tworzenia nieskończonych sekwencji (np. ciągu wszystkich liczb naturalnych)?
 A) Ponieważ automatycznie obliczają sumę wszystkich elementów w tle.
 B) Ponieważ nie wymagają przechowywania całej sekwencji, a jedynie stanu potrzebnego do wygenerowania kolejnej liczby.
-C) Ponieważ są napisane w języku C, co pozwala na ominięcie limitów pamięci RAM.
+C) Ponieważ blokują one dostęp do pamięci RAM dla innych procesów, rezerwując ją tylko dla siebie.
 D) Ponieważ pętla while True działa w nich szybciej niż w zwykłych funkcjach.
 Poprawna odpowiedź: B
